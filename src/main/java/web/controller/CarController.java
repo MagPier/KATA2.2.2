@@ -7,19 +7,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import web.Dao.CarDao;
 import web.Dao.CarDaoImpl;
 import web.model.Car;
+
 import java.util.List;
 
 @Controller
 public class CarController {
+    private final CarDao carDao;
+
+    public CarController(CarDao carDao) {
+        this.carDao = carDao;
+    }
+
+
     @GetMapping(value = "/cars")
     public String printCars(ModelMap model, @RequestParam(value = "count", required = true, defaultValue = "5") int count) {
-        CarDao carDao = new CarDaoImpl();
-        List<Car> cars = carDao.create5Car();
-        if (count <= 0 || count > 5) {
-            model.addAttribute("messages", cars);
-        } else {
-            model.addAttribute("messages", cars.subList(0, count));
-        }
+
+            model.addAttribute("messages",  carDao.getUpTo5cars(count));
         return "cars";
     }
 }

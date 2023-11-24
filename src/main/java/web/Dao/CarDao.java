@@ -6,4 +6,7 @@ import java.util.List;
 
 public interface CarDao {
     List<Car> create5Car();
+
+    List<Car> getUpTo5cars(int count);
 }
+
